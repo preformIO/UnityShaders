@@ -1,7 +1,8 @@
-﻿Shader "NiksShaders/Shader3Unlit"
+﻿Shader "dahVEED/Shader3Unlit"
 {
     Properties
     {
+        _ColorA("Color A", Color) = (1, 0, 0, 1)
     }
     SubShader
     {
@@ -16,10 +17,11 @@
 
             #include "UnityCG.cginc"
 
+            fixed4 _ColorA;
+
             fixed4 frag (v2f_img i) : SV_Target
             {
-                fixed3 color = 1;
-                return fixed4(color, 1.0);
+                return _ColorA;
             }
             ENDCG
         }
