@@ -1,8 +1,7 @@
-Shader "dahVEEDsCustomShaders/Shader1Unlit"
+Shader "dahVEED/Shader1Unlit"
 {
     Properties
     {
-
     }
     SubShader
     {
