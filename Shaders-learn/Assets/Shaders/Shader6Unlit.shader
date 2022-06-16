@@ -1,4 +1,4 @@
-﻿Shader "NiksShaders/Shader6Unlit"
+﻿Shader "dahVEED/Shader6Unlit"
 {
     Properties
     {
@@ -11,8 +11,8 @@
         Pass
         {
             CGPROGRAM
-// Upgrade NOTE: excluded shader from DX11; has structs without semantics (struct v2f members position)
-#pragma exclude_renderers d3d11
+            //// Upgrade NOTE: excluded shader from DX11; has structs without semantics (struct v2f members position)
+            //#pragma exclude_renderers d3d11
             #pragma vertex vert
             #pragma fragment frag
 
@@ -20,9 +20,9 @@
 
             struct v2f
             {
-                float4 vertex : SV_POSITION;
+                float4 vertex: SV_POSITION;
                 float4 position: TEXCOORD1;
-                float2 uv : TEXCOORD0;
+                float2 uv: TEXCOORD0;
             };
             
             v2f vert (appdata_base v)
@@ -36,7 +36,10 @@
 
             fixed4 frag (v2f i) : SV_Target
             {
-                fixed3 color = saturate(i.position * 2);
+                fixed3 color = i.position * 2;
+                color.r = smoothstep(-.5, -0.45, color.r);
+                color.g = step(-.25, color.g);
+                color.b = smoothstep(.2, .21, length(i.position.xy));
                 return fixed4(color, 1.0);
             }
             ENDCG
