@@ -1,4 +1,4 @@
-﻿Shader "NiksShaders/Shader8Unlit"
+﻿Shader "dahVEED/Shader8Unlit"
 {
     Properties
     {
@@ -11,8 +11,8 @@
         Pass
         {
             CGPROGRAM
-// Upgrade NOTE: excluded shader from DX11; has structs without semantics (struct v2f members position)
-#pragma exclude_renderers d3d11
+//// Upgrade NOTE: excluded shader from DX11; has structs without semantics (struct v2f members position)
+//#pragma exclude_renderers d3d11
             #pragma vertex vert
             #pragma fragment frag
 
@@ -34,10 +34,22 @@
                 return o;
             }
 
+            float rect(float2 pt, float2 size, float2 center)
+            {
+                float2 p = pt - center;
+                float2 halfSize = size * 0.5;
+                float horz = step(-halfSize.x, p.x) - step(halfSize.x, p.x);
+                float vert = step(-halfSize.y, p.y) - step(halfSize.y, p.y);
+                return horz * vert;
+            }
+
             fixed4 frag (v2f i) : SV_Target
             {
-                float inCircle = 1 - step(0.25, length( i.position.xy ));
-                fixed3 color = fixed3(1,1,0) * inCircle;
+                float2 pos = i.position.xy;
+                float2 size = 0.5;
+                float2 center = 0.0;
+                float inRect = rect(pos, size, center);
+                fixed3 color = fixed3(1,1,0) * inRect;
                 return fixed4(color, 1.0);
             }
             ENDCG
