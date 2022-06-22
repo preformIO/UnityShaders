@@ -1,4 +1,4 @@
-﻿Shader "NiksShaders/Shader11Unlit"
+﻿Shader "dahVEED/Shader11Unlit"
 {
     Properties
     {
@@ -14,8 +14,8 @@
         Pass
         {
             CGPROGRAM
-// Upgrade NOTE: excluded shader from DX11; has structs without semantics (struct v2f members position)
-#pragma exclude_renderers d3d11
+//// Upgrade NOTE: excluded shader from DX11; has structs without semantics (struct v2f members position)
+//#pragma exclude_renderers d3d11
             #pragma vertex vert
             #pragma fragment frag
 
@@ -49,13 +49,24 @@
                 return horz*vert;
             }
 
+            float2x2 getRotationMatrix(float theta)
+            {
+                float s = sin(theta);
+                float c = cos(theta);
+
+                return float2x2(c, -s, s, c);
+            }
+
             fixed4 frag (v2f i) : SV_Target
             {
                 float2 center = float2(cos(_Time.y), sin(_Time.y)) * _Radius;
                 float2 pos = i.position * 2.0;
                 float2 size = _Size;
                   
-                float3 color = _Color * rect(pos, size, center);
+                float2x2 mat = getRotationMatrix(_Time.y);
+                float2 pt = mul(mat, pos - center) + center;
+
+                float3 color = _Color * rect(pt, size, center);
                 
                 return fixed4(color, 1.0);
             }
