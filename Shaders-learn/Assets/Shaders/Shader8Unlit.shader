@@ -36,11 +36,15 @@
 
             float rect(float2 pt, float2 size, float2 center)
             {
+                // Returns 1 when pt is within a rect defined by size and center
+                //ie. (pt-center) >- halfsize and (pt-center) < halfsize
                 float2 p = pt - center;
-                float2 halfSize = size * 0.5;
-                float horz = step(-halfSize.x, p.x) - step(halfSize.x, p.x);
-                float vert = step(-halfSize.y, p.y) - step(halfSize.y, p.y);
-                return horz * vert;
+                float2 halfsize = size * 0.5;
+
+                float2 test = step(-halfsize, p) - step(halfsize, p);
+
+                return test.x * test.y;
+
             }
 
             fixed4 frag (v2f i) : SV_Target
