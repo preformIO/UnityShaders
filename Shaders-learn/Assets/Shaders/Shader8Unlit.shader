@@ -46,10 +46,17 @@
             fixed4 frag (v2f i) : SV_Target
             {
                 float2 pos = i.position.xy;
-                float2 size = 0.5;
-                float2 center = 0.0;
-                float inRect = rect(pos, size, center);
-                fixed3 color = fixed3(1,1,0) * inRect;
+                
+                float2 sizeYellow = 0.3;
+                float2 centerYellow = float2(-0.25, 0);
+                float inRectYellow = rect(pos, sizeYellow, centerYellow);
+                
+                float2 sizeGreen = 0.4;
+                float2 centerGreen = float2(0.25, 0);
+                float inRectGreen = rect(pos, sizeGreen, centerGreen);
+
+                fixed3 color = fixed3(1,1,0) * inRectYellow + fixed3(0,1,0) * inRectGreen;
+
                 return fixed4(color, 1.0);
             }
             ENDCG
