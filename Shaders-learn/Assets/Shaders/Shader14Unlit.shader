@@ -1,4 +1,4 @@
-﻿Shader "NiksShaders/Shader14Unlit"
+﻿Shader "dahVEED/Shader14Unlit"
 {
     Properties
     {
@@ -13,8 +13,8 @@
         Pass
         {
             CGPROGRAM
-// Upgrade NOTE: excluded shader from DX11; has structs without semantics (struct v2f members position)
-#pragma exclude_renderers d3d11
+//// Upgrade NOTE: excluded shader from DX11; has structs without semantics (struct v2f members position)
+//#pragma exclude_renderers d3d11
             #pragma vertex vert
             #pragma fragment frag
 
@@ -38,11 +38,41 @@
            
             fixed4 _Color;
             float _Radius;
+
+            float circle(float2 pt, float2 center, float radius)
+            {
+                float2 p = pt - center;
+                return 1.0 - step(radius, length(p));
+            }
+            
+            float circle(float2 pt, float2 center, float radius, bool soften)
+            {
+                float2 p = pt - center;
+                float edge = (soften) ? radius * 0.005 : 0.0;
+                return 1.0 - smoothstep(radius-edge, radius+edge, length(p));
+            }
+            
+            float circle(float2 pt, float2 center, float radius, float line_width)
+            {
+                float2 p = pt - center;
+                float len = length(p);
+                float half_line_width = line_width / 2.0;
+                return step(radius - half_line_width, len) - step(radius + half_line_width, len);
+            }
+            
+            float circle(float2 pt, float2 center, float radius, float line_width, float edge_thickness)
+            {
+                float2 p = pt - center;
+                float len = length(p);
+                float half_line_width = line_width / 2.0;
+                return smoothstep(radius - half_line_width - edge_thickness, radius - half_line_width, len)
+                     - smoothstep(radius + half_line_width, radius + half_line_width + edge_thickness, len);
+            }
             
             fixed4 frag (v2f i) : SV_Target
             {
                 float2 pos = i.position * 2;
-                fixed3 color = _Color;
+                fixed3 color = _Color * circle(pos, float2(0,0), _Radius, _Radius *0.2, _Radius *0.1);
                 
                 return fixed4(color, 1.0);
             }
