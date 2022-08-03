@@ -81,7 +81,7 @@ Material:
     - _WindQuality: 0
     - _ZWrite: 1
     m_Colors:
-    - _Anchor: {r: 0, g: 0, b: 0, a: 0}
+    - _Anchor: {r: 0.15, g: 0.15, b: 0, a: 0}
     - _Color: {r: 0.9811321, g: 0.9441407, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HueVariation: {r: 1, g: 0.5, b: 0, a: 0.1}
