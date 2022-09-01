@@ -1,4 +1,4 @@
-﻿Shader "NiksShaders/Shader23Unlit"
+﻿Shader "dahVEED/Shader23Unlit"
 {
     Properties
     {
@@ -14,8 +14,8 @@
         Pass
         {
             CGPROGRAM
-// Upgrade NOTE: excluded shader from DX11; has structs without semantics (struct v2f members position)
-#pragma exclude_renderers d3d11
+//// Upgrade NOTE: excluded shader from DX11; has structs without semantics (struct v2f members position)
+//#pragma exclude_renderers d3d11
             #pragma vertex vert
             #pragma fragment frag
             

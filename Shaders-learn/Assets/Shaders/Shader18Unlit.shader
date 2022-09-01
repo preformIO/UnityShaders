@@ -1,4 +1,4 @@
-﻿Shader "NiksShaders/Shader18Unlit"
+﻿Shader "dahVEED/Shader18Unlit"
 {
     Properties
     {
