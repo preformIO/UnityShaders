@@ -1,4 +1,4 @@
-﻿Shader "NiksShaders/Shader34Unlit"
+﻿Shader "dahVEED/Shader34Unlit"
 {
     Properties
     {
@@ -6,11 +6,14 @@
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags { "Queue" = "Transparent" }
         LOD 100
 
         Pass
         {
+            ZWrite Off
+            Blend SrcAlpha OneMinusSrcAlpha
+
             CGPROGRAM
             #pragma vertex vert_img
             #pragma fragment frag

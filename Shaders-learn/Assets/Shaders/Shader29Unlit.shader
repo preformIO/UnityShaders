@@ -1,7 +1,9 @@
-﻿Shader "NiksShaders/Shader29Unlit"
+﻿Shader "dahVEED/Shader29Unlit"
 {
     Properties
     {
+        _ColorA("Color A", Color) = (1, 0, 0, 1)
+        _ColorB("Color B", Color) = (1, 1, 0, 1)
     }
     SubShader
     {
@@ -16,6 +18,9 @@
             #pragma fragment frag
           
             #include "UnityCG.cginc"
+
+            fixed4 _ColorA;
+            fixed4 _ColorB;
 
             float random (float2 pt) {
                 const float a = 12.9898;
@@ -51,12 +56,15 @@
             fixed4 frag (v2f_img i) : SV_Target
             {
                 // Scale the coordinate system to see some noise in action
-                float2 pos = i.uv * 8.0;
+                float2 pos = float2(i.uv.x * 1.4 + 0.01, i.uv.y - _Time.y * 0.69);
+                float n = noise(pos * 12.0);
+                pos = float2(i.uv.x * 0.5 - 0.033, i.uv.y * 2.0 - _Time.y * 0.12);
+                n += noise(pos * 8.0);
+                pos = float2(i.uv.x * 0.94 - 0.02, i.uv.y * 3.0 - _Time.y * 0.61);
+                n += noise(pos * 4.0);
+                n /= 3.0;
 
-                // Use the noise function
-                float n = noise(pos); 
-                //n = smoothstep(0.4, 0.6, n);
-                fixed3 color = n * fixed3(1,1,1);
+                fixed3 color = lerp(_ColorA, _ColorB, n);
                 
                 return fixed4(color, 1.0);
             }
